@@ -1,0 +1,8 @@
+celery==5.2.7
+Django==4.1
+gurobipy==9.5.2
+numpy==1.23.2
+pandas==1.4.3
+redis==4.3.4
+asgiref==3.5.2
+pytz==2022.2.1

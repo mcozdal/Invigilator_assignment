@@ -1,0 +1,45 @@
+version: "3"
+
+services:
+    redis:
+        restart: on-failure
+        image: redis:7.0.4
+        container_name: redis
+
+    # Django
+    web:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        hostname: web
+        command: python manage.py runserver 0.0.0.0:8000
+
+        ports:
+            - "8000:8000"
+        links:
+            - redis
+
+
+    # Celery worker
+    worker:
+        restart: always
+        build:
+            context: .
+            dockerfile: Dockerfile
+        command: celery -A inv worker -l info
+        container_name: celery
+        volumes:
+            - .:/inv
+
+        depends_on:
+            - redis
+            - web
+
+
+    #gurobi
+    gurobi:
+        image: gurobi/python:latest
+        environment:
+            - GRB_CLIENT_LOG=3
+        volumes:
+            - ./gurobi.lic:/home/mc/gurobi.lic:ro

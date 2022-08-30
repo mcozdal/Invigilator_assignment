@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="tabs-style.css" /> -->
+    <title>Tabs</title>
+    <style>
+body {
+    background: #ccc;
+    font-family: 'Roboto', sans-serif;
+}
+
+.tab-label { 
+    padding: 10px;
+    background: #e2e2e2;
+    font-weight: bold;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    height: 1.25em;
+}
+.mytabs {
+    display: flex;
+    flex-wrap: wrap;
+    
+    margin: 5px;
+    padding: 5px;
+}
+.mytabs input[type="radio"] {
+    display: none;
+}
+
+
+.mytabs .content {
+    width: 100%;
+    height: 100vh;
+    padding: 5px;
+    background: rgb(185, 185, 181);
+    order: 1;
+    display: none;
+    bottom: 0;
+}
+
+
+.mytabs input[type='radio']:checked + label + .content {
+    display: flex;
+}
+
+.mytabs input[type="radio"]:checked + label {
+    background: #fff;
+    
+}
+
+.content {
+    display: flex;
+    justify-content: flex-start;
+}   
+
+.content .left {
+    width: 50%;
+    bottom: 10px;
+    border: 2px solid black;
+    margin: 10px;
+    order: 1;
+}
+
+.content .right {
+    width: 50%;    
+    bottom: 10px;
+    border: 2px solid black;
+    margin: 10px;
+    order: 2;
+}
+
+.content input {
+    margin: 2px;
+}
+
+.content label {
+    margin: 0 0 0 10px;
+}
+
+form {
+    width: 100%;
+}
+
+form p {
+    display: inline-block;
+}
+
+form label {
+    display: inline-block;
+    width: 40%;
+    padding: 0 0 0 20px;
+    font-size: 20px;
+}
+
+form input { 
+    margin: 0 0 0 10px;
+    padding: 4px;
+    font-size: 16px;
+    border-radius: 5px;
+    height: 20px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.right-add {
+    height: 100px;
+    width: 99%;
+    border: 2px solid black;
+    margin: 5px;
+    padding: 5px;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* text-align: center; */
+}
+
+.course-card {
+    height: 100px;
+    width: auto;
+    border: 3px solid black;
+    margin: 5px;
+    background-color: white;
+        
+}
+
+
+
+    </style>
+</head>
+<body>
+  <div class="mytabs">
+    <input type="radio" id="tab-course" name="mytabs" checked="checked">
+    <label class="tab-label" for="tab-course">Course</label>
+    <div class="content">
+        <div class="left"> Course Info <br> <br>
+            <form method="post" action="">
+                {% csrf_token %}
+                <label for="course-name">Course Name:</label>
+                <input type="text" name="course-name" id="cname"><br>
+   
+                <label for="course-id">Course ID:</label>
+                <input type="number" name="" id="cid"><br>
+
+                <label for="">Instructor:</label>
+                <input type="text" name="" id="instructor"><br>
+               
+                <label for="">Teaching Asistant:</label>
+                <input type="text" name="" id="asistant"><br>
+               
+                <label for="">Number of Students:</label>
+                <input type="number" name="" id="noStundent"><br>
+                
+                <label for="">Group Number:</label>
+                <input type="number" name="" id="gNo"><br>
+
+
+                <input type="file" name="excel" class="form-control">
+               
+                <input type="submit" value="Submit">
+            </form>
+        </div>  
+        <div class="right">         
+            <input type="button" value="ADD" class="right-add">
+            <div class="course-card">
+                <p id="course-name"></p>
+                <p id="course-id"></p>
+                <p id="student-number"></p>
+            </div>
+        </div>
+    </div>
+
+    <input type="radio" id="tab-inv" name="mytabs">
+    <label class="tab-label" for="tab-inv">Invigilators</label>
+    <div class="content">
+      <div class="left">Invigilators <br> <br>
+            <form action="">
+
+                <label for="course-name">Title:</label>
+                <input type="text" name="course-name" id="cname"><br>
+   
+                <label for="course-id">First Name:</label>
+                <input type="number" name="" id="cid"><br>
+
+                <label for="">E-mail:</label>
+                <input type="number" name="" id="noStundent"><br>
+               
+                <label for="">User ID:</label>
+                <input type="text" name="" id="instructor"><br>
+                
+                <label for="">Load Ratio:</label>
+                <input type="text" name="" id="asistant"><br>
+                
+                <label for="">Group Number:</label>
+                <input type="number" name="" id="gNo"><br>
+                
+            </form>
+      </div>
+      <div class="right">
+          <div class="right-add">ADD</div>
+      </div>
+
+    </div>
+
+    <input type="radio" id="tab-exam" name="mytabs">
+    <label class="tab-label" for="tab-exam">Exams</label>
+    <div class="content">
+      <div class="left">left2</div>
+      <div class="right">right</div>
+      
+    </div>
+
+  </div>
+</body>
+</html>
+
