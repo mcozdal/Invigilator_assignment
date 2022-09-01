@@ -24,7 +24,6 @@ def assign(excel_path):
     print('sets')
     invigilators = list(df_inv.loc[:, 'invigilatorid'])
     exams = list(df_sch.loc[:, 'examid'])
-    time_slots = [f't{i + 1}' for i in range(len(days) * len(hours))]
 
     u = {}
 
@@ -51,6 +50,8 @@ def assign(excel_path):
 
     days = list(set(exam_date))
     days.sort()
+
+    time_slots = [f't{i + 1}' for i in range(len(days) * len(hours))]
 
     for i in time:
         i[0] = hours.index(i[0]) + 1
@@ -143,3 +144,5 @@ def assign(excel_path):
     print('done')
 
     yy.to_excel('assignments.xlsx')
+
+    return True
