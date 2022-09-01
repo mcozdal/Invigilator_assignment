@@ -1,6 +1,7 @@
 inv/inv/__pycache__/celery.cpython-39.pyc
 inv/dump.rdb
 inv/gurobi.lic
+gurobi.lic
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
