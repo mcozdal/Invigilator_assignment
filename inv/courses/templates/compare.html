@@ -1,0 +1,29 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pairwise</title>
+    <link rel="stylesheet"  type="text/css" href="{% static 'style.css' %}" />
+
+
+</head>
+<body>
+
+    <input type="button" id='1234' value="Doldur" onclick="bb()">
+    <input type="button" value="Olustur" onclick="createData()">
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+
+
+    <script src="{% static 'script.js' %}"></script>
+
+    <input type="button" value="Submit" onclick="postData()">
+</body>
+</html>

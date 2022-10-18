@@ -3,4 +3,5 @@ from . import views
 
 urlpatterns = [
     path('inv/', views.site),
+    path('anp/', views.comparisons),
 ]

@@ -31,3 +31,14 @@ def site(request):
         # return HttpResponse('df_c')
 
     return render(request, template_name, {})
+
+
+def comparisons(request):
+    template_name = 'compare.html'
+
+    if request.method == 'POST':
+
+        uploaded_file = request.POST
+        print(uploaded_file)
+
+    return render(request, template_name)

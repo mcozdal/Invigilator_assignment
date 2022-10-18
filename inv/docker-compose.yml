@@ -5,7 +5,8 @@ services:
         restart: on-failure
         image: redis:7.0.4
         container_name: redis
-
+        networks:
+            - net
     # Django
     web:
         build:
@@ -18,7 +19,8 @@ services:
             - "8000:8000"
         links:
             - redis
-
+        networks:
+            - net
 
     # Celery worker
     worker:
@@ -28,11 +30,12 @@ services:
             dockerfile: Dockerfile
         command: celery -A inv worker -l info
         container_name: celery
-
+      
         depends_on:
             - redis
             - web
-
+        networks:
+            - net
 
     #gurobi
     gurobi:
@@ -41,3 +44,7 @@ services:
             - GRB_CLIENT_LOG=3
         volumes:
             - ./gurobi.lic:/home/mc/gurobi.lic:ro
+
+
+networks:
+    net:
