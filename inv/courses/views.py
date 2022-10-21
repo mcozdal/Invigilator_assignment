@@ -5,6 +5,7 @@ from wsgiref.util import FileWrapper
 from inv.settings import BASE_DIR
 import os
 from .tasks import task1
+from json import dumps
 
 
 def site(request):
@@ -36,9 +37,39 @@ def site(request):
 def comparisons(request):
     template_name = 'compare.html'
 
+    clusters = {
+        'Istek Turu': ['Hata', 'Yeni', 'Degisiklik', 'Destek', 'Fast'],
+        'Sure': ['0-4', '4-8', '4-12', '>12'],
+        'Etki': ['Düşük Etki', 'Orta Etki', 'Yüksek Etki'],
+        'Aciliyet': ['DüşükA', 'OrtaA', 'YüksekA'],
+        'Kontrat': ['Dusuk Kon', 'Orta Kon', 'Yüksek Kon']
+    }
+    cluster_comps = {
+
+    }
+
+    data = {'clusters': clusters,
+            'pair': cluster_comps,
+            'comps': {'Istek Turu': ['Sure'],
+                      }
+            }
+
+    dataJSON = dumps(data)
+
     if request.method == 'POST':
 
         uploaded_file = request.POST
         print(uploaded_file)
 
-    return render(request, template_name)
+    return render(request, template_name, {'data': dataJSON})
+
+
+def createComps(nodes):
+    comps = []
+    nodes_len = len(nodes)
+
+    for i in range(nodes_len - 1):
+        for j in range(i + 1, nodes_len):
+            comps.append([nodes[i], nodes[j]])
+
+    return comps

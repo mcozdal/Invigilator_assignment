@@ -21,6 +21,9 @@
         {% block content %}{% endblock %}
     </div>
 
+    <script>
+        var incData = JSON.parse("{{data|escapejs}}");
+    </script>
 
     <script src="{% static 'script.js' %}"></script>
 

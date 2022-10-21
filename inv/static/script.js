@@ -1,27 +1,69 @@
-console.log('asdasd')
+console.log(incData)
+var clusters = incData['clusters']
+pageCluster = incData['comps']
+console.log('aa', pageCluster)
+
+function createComps(nodes) {
+    let comps = new Array();
+    let nodesLen = nodes.length;
+
+    for (i = 0; i < nodesLen - 1; i++) {
+        for (j = i + 1; j < nodesLen; j++) {
+            comps.push([nodes[i], nodes[j]]);
+        }
+    }
+
+    return comps;
+}
+
+// reqCluster > 'Istek Turu' : 'sure'
+function abc(clusters, requestedCluster) {
+    let tableNo = 1;
+
+    console.log('req', requestedCluster)
+
+    for (let key in requestedCluster) {
+
+        pageHeader = document.createElement('h1')
+        pageHeader.innerHTML = key
+        document.body.append(pageHeader)
+
+        //istek türü key
+        //süre reqCluster key
+        parseData(clusters, key, requestedCluster[key])
+
+    }
 
 
-const button = document.getElementById('1234')
-console.log(button.value)
-var cluster1 = 'İstek Türü'
+}
 
-var kriterler = ['Hata', 'Yeni', 'Degisiklik', 'Destek', 'Fast']
-var kriterlerLen = kriterler.length
-var comps = new Array()
+abc(clusters, pageCluster)
+//pairOfCluster > pairleri oluşturulacak cluster
+// reqClus wrt olan süre
+function parseData(clusters, pairOfCluster, req) {
+    let tableNo = 0;
+    let pairs = createComps(clusters[pairOfCluster]);
+    const reqLen = clusters[req].length
+    console.log('cl', clusters[req].length)
 
-for (i = 0; i < kriterlerLen - 1; i++) {
-    for (j = i + 1; j < kriterlerLen; j++) {
-        comps.push([kriterler[i], kriterler[j]])
+    for (m = 0; m < reqLen; m++) {
+        console.log('hele')
+        const header = document.createElement('h3')
+        header.innerHTML = clusters[req][tableNo]
+        document.body.appendChild(header)
+
+        createTable(tableNo, pairOfCluster, pairs);
+
+        tableNo++;
     }
 
 }
 
-compsLen = comps.length
-
-
-
+// parseData({ 'Istek Turu': clusters['Istek Turu'] });
+// parseData(clusters);
 
 function createTable(tableNo, cluster, comps) {
+
     const table = document.createElement('table')
     table.id = `table${tableNo}`
     document.body.appendChild(table)
@@ -29,7 +71,7 @@ function createTable(tableNo, cluster, comps) {
     // header
     function createHeader(tableNo, cluster) {
         const row = document.createElement('tr')
-        row.id = `header${tableNo}`
+        row.id = `tableHeader${tableNo}`
 
         table.append(row)
 
@@ -41,6 +83,7 @@ function createTable(tableNo, cluster, comps) {
         // Cluster Name
         const clusterName = document.createElement('td')
         clusterName.innerHTML = cluster
+        clusterName.className = `cluster`
         row.append(clusterName)
 
         //left numbers
@@ -70,10 +113,11 @@ function createTable(tableNo, cluster, comps) {
 
         const clusterName2 = document.createElement('td')
         clusterName2.innerHTML = cluster
+        clusterName2.className = `cluster`
         row.append(clusterName2)
     }
 
-    createHeader(1, cluster)
+    createHeader(tableNo, cluster)
 
 
 
@@ -153,7 +197,8 @@ function createTable(tableNo, cluster, comps) {
     }
 }
 
-createTable(1, cluster1, comps)
+// createTable(1, cluster1, comps)
+// createTable(2, sure, sureComps)
 
 function bb() {
     for (i = 0; i < 10; i++) {
@@ -168,7 +213,7 @@ function createData() {
     let data = new Array()
     var full = new Array()
 
-    for (k = 0; k < compsLen; k++) {
+    for (k = 0; k < 10; k++) {
 
         var abc = document.querySelector(`input[name="radio${k}"]:checked`).value
         full.push(abc)
@@ -221,15 +266,16 @@ function create(elem, props) {
 }
 
 inp = create('input', {
-    type: 'button', value: 'submit', onclick: 'postData()'
+    type: 'button', value: 'submit', onclick: postData()
 })
 document.body.append(inp)
 
-// async function postData() {
-//     let data = createData()
-//     const response = await fetch("/echo", {
+// async function postData1() {
+//     console.log('postData1');
+//     let data = createData();
+//     const response = await fetch("/courses/anp/", {
 //         method: "POST",
-//         headers: { 'Content-Type': 'application/json' },
+//         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 //         body: JSON.stringify(data)
 //     });
 //     const actualResponse = await response.json();
@@ -238,7 +284,7 @@ document.body.append(inp)
 
 function postData() {
 
-    let dat = createData()
+    let dat = createData();
 
     // Creating a XHR object
     let xhr = new XMLHttpRequest();
@@ -255,12 +301,12 @@ function postData() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             // Print received data from server
             console.log(this.responseText);
-        }
+        };
     };
 
     // Converting JSON data to string
-    let data = JSON.stringify({ data: dat })
-    console.log(data)
+    let data = JSON.stringify({ data: dat });
+    console.log(data);
     // Sending data with the request
     xhr.send(data);
 }
