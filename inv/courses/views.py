@@ -51,6 +51,8 @@ def comparisons(request):
     data = {'clusters': clusters,
             'pair': cluster_comps,
             'comps': {'Istek Turu': ['Sure'],
+                      'Etki': ['Sure'],
+                      'Aciliyet': ['Sure']
                       }
             }
 

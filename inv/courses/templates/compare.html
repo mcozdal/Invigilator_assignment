@@ -14,19 +14,21 @@
 </head>
 <body>
 
-    <input type="button" id='1234' value="Doldur" onclick="bb()">
-    <input type="button" value="Olustur" onclick="createData()">
-
+    <!-- <input type="button" id='1234' value="Doldur" onclick="bb()"> -->
+    
     <div id="content">
         {% block content %}{% endblock %}
     </div>
-
+    
     <script>
         var incData = JSON.parse("{{data|escapejs}}");
     </script>
 
     <script src="{% static 'script.js' %}"></script>
-
+    
+    <br><br><br>
+    
     <input type="button" value="Submit" onclick="postData()">
+    <input type="button" value="Olustur" onclick="createData()">
 </body>
 </html>

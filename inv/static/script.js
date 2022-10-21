@@ -3,6 +3,8 @@ var clusters = incData['clusters']
 pageCluster = incData['comps']
 console.log('aa', pageCluster)
 
+var currentPage = 'page0'
+
 function createComps(nodes) {
     let comps = new Array();
     let nodesLen = nodes.length;
@@ -18,20 +20,28 @@ function createComps(nodes) {
 
 // reqCluster > 'Istek Turu' : 'sure'
 function abc(clusters, requestedCluster) {
-    let tableNo = 1;
-
+    let pageNo = 0;
     console.log('req', requestedCluster)
 
     for (let key in requestedCluster) {
+        const page = document.createElement('div')
+        page.id = `page${pageNo}`
+
+        if (page.id != 'page0') {
+            page.className = 'hide'
+        }
+        document.body.append(page)
+
 
         pageHeader = document.createElement('h1')
         pageHeader.innerHTML = key
-        document.body.append(pageHeader)
+        page.append(pageHeader)
 
         //istek türü key
         //süre reqCluster key
-        parseData(clusters, key, requestedCluster[key])
+        parseData(clusters, key, requestedCluster[key], page)
 
+        pageNo++;
     }
 
 
@@ -40,7 +50,7 @@ function abc(clusters, requestedCluster) {
 abc(clusters, pageCluster)
 //pairOfCluster > pairleri oluşturulacak cluster
 // reqClus wrt olan süre
-function parseData(clusters, pairOfCluster, req) {
+function parseData(clusters, pairOfCluster, req, page) {
     let tableNo = 0;
     let pairs = createComps(clusters[pairOfCluster]);
     const reqLen = clusters[req].length
@@ -50,9 +60,9 @@ function parseData(clusters, pairOfCluster, req) {
         console.log('hele')
         const header = document.createElement('h3')
         header.innerHTML = clusters[req][tableNo]
-        document.body.appendChild(header)
+        page.appendChild(header)
 
-        createTable(tableNo, pairOfCluster, pairs);
+        createTable(tableNo, pairOfCluster, pairs, page);
 
         tableNo++;
     }
@@ -62,11 +72,11 @@ function parseData(clusters, pairOfCluster, req) {
 // parseData({ 'Istek Turu': clusters['Istek Turu'] });
 // parseData(clusters);
 
-function createTable(tableNo, cluster, comps) {
+function createTable(tableNo, cluster, comps, page) {
 
     const table = document.createElement('table')
     table.id = `table${tableNo}`
-    document.body.appendChild(table)
+    page.appendChild(table)
 
     // header
     function createHeader(tableNo, cluster) {
@@ -265,11 +275,140 @@ function create(elem, props) {
     return obj
 }
 
-inp = create('input', {
-    type: 'button', value: 'submit', onclick: postData()
-})
-document.body.append(inp)
 
+const prev = document.createElement('input')
+prev.type = 'button'
+prev.value = '<'
+prev.className = 'prev page-change'
+prev.onclick = function () { prePage() }
+
+document.body.append(prev)
+
+const next = document.createElement('input')
+next.type = 'button'
+next.value = '>'
+next.className = 'next page-change'
+next.onclick = function () { nextPage() }
+document.body.append(next)
+
+function prePage() {
+    console.log('prePage')
+    const hiddens = document.getElementsByClassName("hide");
+    const colLen = hiddens.length
+
+    let hiddensList = new Array()
+
+    for (let a = 0; a < colLen; a++) {
+        hiddensList.push(hiddens[a].id)
+
+    }
+
+    // console.log('hid', hiddensList)
+
+    let pages = document.querySelectorAll('[id^="page"]');
+
+    const pagesLen = pages.length
+    let pageList = new Array()
+
+
+    for (let a = 0; a < pagesLen; a++) {
+        pageList.push(pages[a].id)
+
+    }
+
+    // console.log('pageL', pageList)
+
+    for (l = 0; l < pagesLen; l++) {
+        if (!(hiddensList.includes(pageList[l]))) {
+            currentPage = pageList[l]
+        }
+    }
+
+    let currentPageNo = parseInt(currentPage.slice(-1))
+
+    if (currentPageNo != 0) {
+        // preNo = currentPageNo - 1
+        const pre = document.getElementById(`page${currentPageNo - 1}`)
+        pre.className = ''
+
+        const cur = document.getElementById(currentPage)
+        cur.className = 'hide'
+
+        currentPage = pre.id
+    } else if (currentPageNo == 0) {
+
+        const pre = document.getElementById(`page${pagesLen - 1}`)
+        pre.className = ' '
+
+
+        const cur = document.getElementById(currentPage)
+        cur.className = 'hide'
+
+        currentPage = pre.id
+    }
+
+
+}
+
+
+
+function nextPage() {
+    console.log('nextPage')
+    const hiddens = document.getElementsByClassName("hide");
+    const colLen = hiddens.length
+
+    let hiddensList = new Array()
+
+    for (let a = 0; a < colLen; a++) {
+        hiddensList.push(hiddens[a].id)
+
+    }
+
+    // console.log('hid', hiddensList)
+
+    let pages = document.querySelectorAll('[id^="page"]');
+
+    const pagesLen = pages.length
+    let pageList = new Array()
+
+
+    for (let a = 0; a < pagesLen; a++) {
+        pageList.push(pages[a].id)
+
+    }
+
+    // console.log('pageL', pageList)
+
+    for (l = 0; l < pagesLen; l++) {
+        if (!(hiddensList.includes(pageList[l]))) {
+            currentPage = pageList[l]
+        }
+    }
+
+    let currentPageNo = parseInt(currentPage.slice(-1))
+
+    if (currentPageNo != pagesLen - 1) {
+
+        const next = document.getElementById(`page${currentPageNo + 1}`)
+        next.className = ''
+
+        const cur = document.getElementById(currentPage)
+        cur.className = 'hide'
+
+        currentPage = next.id
+    } else if (currentPageNo == pagesLen - 1) {
+
+        const next = document.getElementById(`page0`)
+        next.className = ' '
+
+        const cur = document.getElementById(currentPage)
+        cur.className = 'hide'
+
+        currentPage = next.id
+    }
+
+
+}
 // async function postData1() {
 //     console.log('postData1');
 //     let data = createData();

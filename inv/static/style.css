@@ -122,3 +122,13 @@ label input {
 .cluster {
     width: 100px;
 }
+
+.hide {
+    display: none;
+}
+
+.page-change {
+    width: 50px;
+    margin: 10px;
+    padding: 10px;
+}
