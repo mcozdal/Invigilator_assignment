@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.files.storage import FileSystemStorage
@@ -34,6 +35,7 @@ def site(request):
     return render(request, template_name, {})
 
 
+@login_required
 def comparisons(request):
     template_name = 'compare.html'
 
